@@ -1,12 +1,15 @@
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, Response
 from flask_sqlalchemy import SQLAlchemy
 import os
 from datetime import datetime
 
-file_path = os.path.abspath(os.getcwd())+"\\usernames.db"
+from psutil import AccessDenied
+
+# file_path = os.path.abspath(os.getcwd())+"\\usernames.db"
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+file_path
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+file_path
+app.config["SQLALCHEMY_DATABASE_URI"] = 'postgres://ufecgkfjiqzgfa:ade59c25b70cd74b8bf574ae4958bb0b2ba649399333e8d9b42f864036c63129@ec2-44-195-162-77.compute-1.amazonaws.com:5432/d1ncuitteasauf'
 db = SQLAlchemy(app)
 
 
@@ -59,13 +62,14 @@ def login():
         data = request.form.to_dict()
         print(data)
         if list(data.keys()) != ["username", "password"]:
-            extra = "\n<p>Error...<p>"
+            return json
         elif User.query.filter_by(username=data["username"]).first() != None:
             user = User.query.filter_by(username=data["username"]).first()
             userPw = user.password
             print(userPw, data["password"])
             if userPw == data["password"]:
-                return jsonify({"username": user.username,
+                return jsonify({"type": "error",
+                                "username": user.username,
                                 "password": user.password,
                                 "created": user.created,
                                 "updated": user.updated})
@@ -114,6 +118,11 @@ def changePassword():
             <input type=submit value=Login>
         </form>{extra}
     '''
+
+
+@app.errorhandler(401)
+def AccessDenied(error):
+    return Response('Incorrect credentials', 401, {'WWW-Authenticate': 'Basic realm="Login Required"'})
 
 
 if __name__ == '__main__':
