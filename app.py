@@ -10,7 +10,7 @@ from flask_cors import CORS, cross_origin
 file_path = os.path.abspath(os.getcwd())+"\\usernames.db"
 app = Flask(__name__)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+file_path
-app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql://ufecgkfjiqzgfa:ade59c25b70cd74b8bf574ae4958bb0b2ba649399333e8d9b42f864036c63129@ec2-44-195-162-77.compute-1.amazonaws.com:5432/d1ncuitteasauf'
+app.config["SQLALCHEMY_DATABASE_URI"] = 'postgres://gzsvtmkpsajnro:35384e3e400bbc9166483f4c2a5e45af4d55efd1429d083fa46f96917a0b3421@ec2-52-73-184-24.compute-1.amazonaws.com:5432/d8rc6an89uh6mq'
 app.config['CORS_HEADERS'] = 'Content-Type'
 db = SQLAlchemy(app)
 cors = CORS(app)
