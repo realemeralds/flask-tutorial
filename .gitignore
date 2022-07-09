@@ -1,0 +1,4 @@
+env
+*.db
+tutorial.py
+__pycache__
