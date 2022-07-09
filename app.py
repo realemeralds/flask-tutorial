@@ -9,7 +9,8 @@ from flask_cors import CORS, cross_origin
 
 file_path = os.path.abspath(os.getcwd())+"\\usernames.db"
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+file_path
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+file_path
+app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql://ufecgkfjiqzgfa:ade59c25b70cd74b8bf574ae4958bb0b2ba649399333e8d9b42f864036c63129@ec2-44-195-162-77.compute-1.amazonaws.com:5432/d1ncuitteasauf'
 app.config['CORS_HEADERS'] = 'Content-Type'
 db = SQLAlchemy(app)
 cors = CORS(app)
@@ -84,39 +85,7 @@ def tutor():
     return jsonify(tutorList)
 
 
-# @app.route("/changePassword", methods=["GET", "POST"])
-# def changePassword():
-#     if request.method == "POST":
-#         data = request.form.to_dict()
-#         print(data)
-#         if list(data.keys()) != ["username", "oldpassword", "newpassword"]:
-#             extra = "<br><p>Error.</p>"
-#             abort(401)
-#         elif User.query.filter_by(username=data["username"]).first() != None and User.query.filter_by(username=data["username"]).first().password == data["oldpassword"]:
-#             User.query.filter_by(username=data["username"]).first(
-#             ).password = data["newpassword"]
-#             db.session.commit()
-#             extra = "\n<p>Success!</p>"
-#         else:
-#             extra = "<br><p>Error.</p>"
-#             if request.method == "POST":
-#                 data = request.form.to_dict()
-#                 print(data)
-#     return f'''
-#         <h1>Change Password</h1>
-#         <form method="post">
-#             <label for="username">Username:</label><br>
-#             <input type=text name=username required><br>
-#             <label for="password">Old Password:</label><br>
-#             <input type=text name=oldpassword required><br>
-#             <label for="password">New Password:</label><br>
-#             <input type=text name=newpassword required><br>
-#             <input type=submit value=Login>
-#         </form>
-#     '''
-
-
-@ app.errorhandler(401)
+@app.errorhandler(401)
 def AccessDenied(error):
     return Response('Incorrect credentials', 401, {'WWW-Authenticate': 'Basic realm="Login Required"'})
 
