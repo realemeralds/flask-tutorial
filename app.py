@@ -3,8 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 from datetime import datetime
 
-from psutil import AccessDenied
-
 # file_path = os.path.abspath(os.getcwd())+"\\usernames.db"
 
 app = Flask(__name__)
