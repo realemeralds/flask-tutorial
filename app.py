@@ -1,13 +1,13 @@
-from flask import Flask, jsonify, request, abort, Response
+from flask import Flask, jsonify, request, abort, Response, render_template
 from flask_sqlalchemy import SQLAlchemy
 import os
 from datetime import datetime
 
-# file_path = os.path.abspath(os.getcwd())+"\\usernames.db"
+file_path = os.path.abspath(os.getcwd())+"\\usernames.db"
 
 app = Flask(__name__)
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+file_path
-app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql://ufecgkfjiqzgfa:ade59c25b70cd74b8bf574ae4958bb0b2ba649399333e8d9b42f864036c63129@ec2-44-195-162-77.compute-1.amazonaws.com:5432/d1ncuitteasauf'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+file_path
+# app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql://ufecgkfjiqzgfa:ade59c25b70cd74b8bf574ae4958bb0b2ba649399333e8d9b42f864036c63129@ec2-44-195-162-77.compute-1.amazonaws.com:5432/d1ncuitteasauf'
 db = SQLAlchemy(app)
 
 
@@ -24,7 +24,7 @@ class User(db.Model):
 
 @app.route("/")
 def hello_world():
-    return "<p>Hello, World!</p>"
+    return "bruhh"
 
 
 @app.route("/signup", methods=["GET", "POST"])
@@ -42,16 +42,7 @@ def signUp():
         else:
             extra = "\n<p>Error: Username is already taken<p>"
 
-    return f'''
-        <h1>Sign Up</h1>
-        <form method="post">
-            <label for="username">Username:</label><br>
-            <input type=text name=username required><br>
-            <label for="password">Password:</label><br>
-            <input type=text name=password required><br>
-            <input type=submit value=Signup>
-        </form>{extra}
-    '''
+    return render_template('index.jinja', heading="Sign In")
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -72,18 +63,10 @@ def login():
                                 "created": user.created,
                                 "updated": user.updated})
         else:
+            print("aborted")
             abort(401)
 
-    return f'''
-        <h1>Login</h1>
-        <form method="post">
-            <label for="username">Username:</label><br>
-            <input type=text name=username required><br>
-            <label for="password">Password:</label><br>
-            <input type=text name=password required><br>
-            <input type=submit value=Login>
-        </form>
-    '''
+    return render_template('index.jinja', heading="Login")
 
 
 @app.route("/changePassword", methods=["GET", "POST"])
@@ -113,7 +96,7 @@ def changePassword():
             <label for="password">New Password:</label><br>
             <input type=text name=newpassword required><br>
             <input type=submit value=Login>
-        </form>{extra}
+        </form>
     '''
 
 
