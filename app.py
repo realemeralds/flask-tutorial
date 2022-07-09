@@ -71,10 +71,9 @@ def login():
                                 "password": user.password,
                                 "created": user.created,
                                 "updated": user.updated})
-            else:
-                abort(401)
+        else:
+            abort(401)
 
-    extra = ""
     return f'''
         <h1>Login</h1>
         <form method="post">
@@ -83,7 +82,7 @@ def login():
             <label for="password">Password:</label><br>
             <input type=text name=password required><br>
             <input type=submit value=Login>
-        </form>{extra}
+        </form>
     '''
 
 
