@@ -3,3 +3,4 @@ env
 tutorial.py
 old.py
 __pycache__
+.env

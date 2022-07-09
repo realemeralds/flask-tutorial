@@ -6,12 +6,23 @@ import os
 from datetime import datetime
 import random
 from flask_cors import CORS, cross_origin
+from flask_mail import Mail, Message
 
 file_path = os.path.abspath(os.getcwd())+"\\usernames.db"
 app = Flask(__name__)
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+file_path
-app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql://gzsvtmkpsajnro:35384e3e400bbc9166483f4c2a5e45af4d55efd1429d083fa46f96917a0b3421@ec2-52-73-184-24.compute-1.amazonaws.com:5432/d8rc6an89uh6mq'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+file_path
+# app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql://gzsvtmkpsajnro:35384e3e400bbc9166483f4c2a5e45af4d55efd1429d083fa46f96917a0b3421@ec2-52-73-184-24.compute-1.amazonaws.com:5432/d8rc6an89uh6mq'
 app.config['CORS_HEADERS'] = 'Content-Type'
+
+app.config['MAIL_SERVER'] = 'smtp.mailtrap.io'
+app.config['MAIL_PORT'] = 2525
+app.config['MAIL_USERNAME'] = 'bf56e8b6c3b351'
+app.config['MAIL_PASSWORD'] = 'cea77bd82ecc97'
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+
+mail = Mail(app)
 db = SQLAlchemy(app)
 cors = CORS(app)
 
@@ -32,6 +43,16 @@ class User(db.Model):
         return '<User %r>' % self.username
 
 
+@app.route("/email/<sender>/<receiver>", methods=["GET", "POST"])
+@cross_origin()
+def index(sender, receiver):
+    msg = Message('CasuTuition Connection',
+                  sender='casuTuition@mailtrap.io', recipients=['example@mailtrap.io', receiver])
+    msg.body = f"Good afternoon, {sender} (email address: {User.query.filter_by(username=sender).first().email}) has requested to contact you on CasuTuition!"
+    mail.send(msg)
+    return jsonify("Message sent!")
+
+
 @app.route("/signup", methods=["GET", "POST"])
 @cross_origin()
 def signUp():
@@ -42,6 +63,26 @@ def signUp():
             if data["teacher"] == "true":
                 user = User(teacher=True, username=data["username"],
                             password=data["password"], email=data["email"], qualis=data["qualis"], subjects=data["subjects"], bio=data["bio"], age=data["age"])
+
+#  const subjectsList = [
+#   "English",
+#   "Foreign Language",
+#   "Economics",
+#   "History",
+#   "Geography",
+#   "Business",
+#   "Physics",
+#   "Chemistry",
+#   "Mathematics",
+# ];
+# const qualiList = [
+#   "PSLE",
+#   "O-Level",
+#   "A-Level",
+#   "IBDP",
+#   "Bachelor's Degree",
+#   "Graduate or Post-Graduate Degree",
+# ];
             else:
                 user = User(teacher=False, username=data["username"],
                             password=data["password"], email=data["email"])

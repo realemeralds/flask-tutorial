@@ -1,0 +1,3 @@
+{
+	"teacher": "true", "email": "theemeralds13@gmail.com", "username": "Janet Tan", "password": "password", qualis:"4", subjects:"[1,4,5]", bio:"Passionate and dedicated volunteer, graduated from NUS SoC in 2021.", age:"13"
+}
