@@ -7,7 +7,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+file_path
-app.config["SQLALCHEMY_DATABASE_URI"] = 'postgres://ufecgkfjiqzgfa:ade59c25b70cd74b8bf574ae4958bb0b2ba649399333e8d9b42f864036c63129@ec2-44-195-162-77.compute-1.amazonaws.com:5432/d1ncuitteasauf'
+app.config["SQLALCHEMY_DATABASE_URI"] = 'postgressql://ufecgkfjiqzgfa:ade59c25b70cd74b8bf574ae4958bb0b2ba649399333e8d9b42f864036c63129@ec2-44-195-162-77.compute-1.amazonaws.com:5432/d1ncuitteasauf'
 db = SQLAlchemy(app)
 
 
@@ -60,13 +60,13 @@ def login():
         data = request.form.to_dict()
         print(data)
         if list(data.keys()) != ["username", "password"]:
-            return json
+            abort(401)
         elif User.query.filter_by(username=data["username"]).first() != None:
             user = User.query.filter_by(username=data["username"]).first()
             userPw = user.password
             print(userPw, data["password"])
             if userPw == data["password"]:
-                return jsonify({"type": "error",
+                return jsonify({"type": "success",
                                 "username": user.username,
                                 "password": user.password,
                                 "created": user.created,
