@@ -114,7 +114,8 @@ def tutor():
         adding = {"username": user.username, "interest": json.loads(user.subjects),
                   "quali": user.qualis, "prestige": round(user.prestige, 2), "bio": user.bio, "email": user.email}
         tutorList.append(adding)
-    sortedTutorList = sorted(tutorList, key=lambda d: d['prestige'])
+    sortedTutorList = sorted(
+        tutorList, key=lambda d: d['prestige'], reverse=True)
     return jsonify(sortedTutorList)
 
 
