@@ -1,3 +1,8 @@
-{
-	"teacher": "true", "email": "theemeralds13@gmail.com", "username": "Janet Tan", "password": "password", qualis:"4", subjects:"[1,4,5]", bio:"Passionate and dedicated volunteer, graduated from NUS SoC in 2021.", age:"13"
-}
+[
+	{
+		"teacher": "true", "email": "theemeralds13@gmail.com", "username": "Janet Tan", "password": "password", qualis:"4", subjects:"[1,4,5]", bio:"Passionate and dedicated volunteer, graduated from NUS SoC in 2021.", age:"13"
+	},
+]
+
+
+ user = User(teacher=True, username="yo", password="password", email="mattechane@gmail.com", qualis=3, age=17, subjects="[1,4,5]", bio="heyo! pls contact me, ratings=3") 

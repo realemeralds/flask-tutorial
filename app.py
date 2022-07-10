@@ -2,17 +2,19 @@ from http.client import OK
 import json
 from flask import Flask, jsonify, request, abort, Response, render_template
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.ext.hybrid import hybrid_property
 import os
 from datetime import datetime
 import random
 from flask_cors import CORS, cross_origin
 from flask_mail import Mail, Message
+import math
 
 file_path = os.path.abspath(os.getcwd())+"\\usernames.db"
 app = Flask(__name__)
 
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+file_path
-app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql://gzsvtmkpsajnro:35384e3e400bbc9166483f4c2a5e45af4d55efd1429d083fa46f96917a0b3421@ec2-52-73-184-24.compute-1.amazonaws.com:5432/d8rc6an89uh6mq'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+file_path
+# app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql://gzsvtmkpsajnro:35384e3e400bbc9166483f4c2a5e45af4d55efd1429d083fa46f96917a0b3421@ec2-52-73-184-24.compute-1.amazonaws.com:5432/d8rc6an89uh6mq'
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 app.config['MAIL_SERVER'] = 'smtp.mailtrap.io'
@@ -34,10 +36,18 @@ class User(db.Model):
     password = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(50), nullable=False)
     qualis = db.Column(db.Integer)
+    pastExp = db.Column(db.Integer, default=0)
     age = db.Column(db.Integer)
     subjects = db.Column(db.String(50))
     bio = db.Column(db.String(300))
-    prestige = db.Column(db.Float, default=random.random()*5)
+    ratings = db.Column(db.Integer, default=2.5)
+
+    @hybrid_property
+    def prestige(self):
+        if self.teacher == True:
+            if type(self.subjects == "int"):
+                self.subjects = json.dumps([self.subjects, ])
+            return (self.ratings / 3 + max(self.pastExp, 5) / 5 + (self.qualis - 3) / 3 + (1 / math.log2(len(json.loads(self.subjects))+1)) + max(self.age, 30) / 30)
 
     def __repr__(self) -> str:
         return '<User %r>' % self.username
@@ -64,25 +74,6 @@ def signUp():
                 user = User(teacher=True, username=data["username"],
                             password=data["password"], email=data["email"], qualis=data["qualis"], subjects=data["subjects"], bio=data["bio"], age=data["age"])
 
-#  const subjectsList = [
-#   "English",
-#   "Foreign Language",
-#   "Economics",
-#   "History",
-#   "Geography",
-#   "Business",
-#   "Physics",
-#   "Chemistry",
-#   "Mathematics",
-# ];
-# const qualiList = [
-#   "PSLE",
-#   "O-Level",
-#   "A-Level",
-#   "IBDP",
-#   "Bachelor's Degree",
-#   "Graduate or Post-Graduate Degree",
-# ];
             else:
                 user = User(teacher=False, username=data["username"],
                             password=data["password"], email=data["email"])
@@ -123,7 +114,8 @@ def tutor():
         adding = {"username": user.username, "interest": json.loads(user.subjects),
                   "quali": user.qualis, "prestige": round(user.prestige, 2), "bio": user.bio, "email": user.email}
         tutorList.append(adding)
-    return jsonify(tutorList)
+    sortedTutorList = sorted(tutorList, key=lambda d: d['prestige'])
+    return jsonify(sortedTutorList)
 
 
 @app.errorhandler(401)
