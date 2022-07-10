@@ -14,7 +14,7 @@ file_path = os.path.abspath(os.getcwd())+"\\usernames.db"
 app = Flask(__name__)
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+file_path
-app.config["SQLALCHEMY_DATABASE_URI"] = 'postgres://dogiahkijljgaq:2b0b744806b44f335940cc08627b008de95bd6d618c6dfee27f5cf0a6a2f3052@ec2-52-73-184-24.compute-1.amazonaws.com:5432/dc6udoshdu4foc'
+app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql://dogiahkijljgaq:2b0b744806b44f335940cc08627b008de95bd6d618c6dfee27f5cf0a6a2f3052@ec2-52-73-184-24.compute-1.amazonaws.com:5432/dc6udoshdu4foc'
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 app.config['MAIL_SERVER'] = 'smtp.mailtrap.io'

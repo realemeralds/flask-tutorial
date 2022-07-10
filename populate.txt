@@ -1,8 +1,55 @@
 [
 	{
-		"teacher": "true", "email": "theemeralds13@gmail.com", "username": "Janet Tan", "password": "password", qualis:"4", subjects:"[1,4,5]", bio:"Passionate and dedicated volunteer, graduated from NUS SoC in 2021.", age:"13"
+		"teacher": "true", "email": "theemeralds13@gmail.com", "username": "Janet Tan", bio:"Passionate and dedicated volunteer, graduated from NUS SoC in 2021.", "password": "password", qualis:"5", subjects:"[1,4,5]" , age:"30"
+	},
+	{
+		"teacher": "true", "email": "vitae.aliquet@icloud.edu", "username": "Caryn Kelly", bio:"Passionate and dedicated volunteer, graduated from NUS SoC in 2021.", "password": "password", qualis:"5", subjects:"[1, 5, 6]" , age:"39"
+	},
+	{
+		"teacher": "true", "email": "nec.mauris.blandit@aol.couk", "username": "Clark Alexander", bio:"Passionate and dedicated volunteer, graduated from NUS SoC in 2021.", "password": "password", qualis:"4", subjects:"[5, 6, 4]" , age:"20"
+	},
+	{
+		"teacher": "true", "email": "ligula.aenean.gravida@yahoo.org", "username": "Wynter Flowers", bio:"Passionate and dedicated volunteer, graduated from NUS SoC in 2021.", "password": "password", qualis:"2", subjects:"[6]" , age:"19"
+	},
+	{
+		"teacher": "true", "email": "at.arcu.vestibulum@aol.net", "username": "Cyrus Hendricks", bio:"Passionate and dedicated volunteer, graduated from NUS SoC in 2021.", "password": "password", qualis:"6", subjects:"[4, 3]" , age:"21"
+	},
+	{
+		"teacher": "true", "email": "odio.tristique@aol.org", "username": "Cedric Branch", bio:"Passionate and dedicated volunteer, graduated from NUS SoC in 2021.", "password": "password", qualis:"5", subjects:"[8, 4]" , age:"34"
+	},
+	{
+		"teacher": "true", "email": "theemeralds13@gmail.com", "username": "Isaac Tan", bio:"Passionate and dedicated volunteer, graduated from NUS SoC in 2021.", "password": "password", qualis:"6", subjects:"[2,7]" , age:"10"
+	},
+	{
+		"teacher": "true", "email": "theemeralds13@gmail.com", "username": "Tamara Hull", bio:"Passionate and dedicated volunteer, graduated from NUS SoC in 2021.", "password": "password", qualis:"5", subjects:"[2,1]" , age:"32"
+	},
+	{
+		"teacher": "true", "email": "theemeralds13@gmail.com", "username": "Hashim Deleon", bio:"Passionate and dedicated volunteer, graduated from NUS SoC in 2021.", "password": "password", qualis:"1", subjects:"[3,7]" , age:"13"
+	},
+	{
+		"teacher": "true", "email": "theemeralds13@gmail.com", "username": "Cora Petty", bio:"Passionate and dedicated volunteer, graduated from NUS SoC in 2021.", "password": "password", qualis:"4", subjects:"[3]" , age:"21"
+	},
+	{
+		"teacher": "true", "email": "mattechane@gmail.com", "username": "Matthew Chan", bio:"Passionate and dedicated volunteer, graduated from NUS SoC in 2021.", "password": "password", qualis:"1", subjects:"[1,4,5]" , age:"11"
 	},
 ]
 
+<option class="option" value="0">English</option>
+            <option class="option" value="1">Foreign Language</option>
+            <option class="option" value="2">Economics</option>
+            <option class="option" value="3">History</option>
+            <option class="option" value="4">Geography</option>
+            <option class="option" value="5">Business</option>
+            <option class="option" value="6">Physics</option>
+            <option class="option" value="7">Chemistry</option>
+            <option class="option" value="8">Mathematics</option>
 
- user = User(teacher=True, username="yo", password="password", email="mattechane@gmail.com", qualis=3, age=17, subjects="[1,4,5]", bio="heyo! pls contact me, ratings=3") 
+			option class="option" value="0">PSLE</option>
+            <option class="option" value="1">O-Level</option>
+            <option class="option" value="2">A-Level</option>
+            <option class="option" value="3">IBDP</option>
+            <option class="option" value="4">Bachelor's Degree</option>
+            <option class="option" value="5">Graduate or Post-Graduate</option>
+            <option class="option" value="6">Other</option>
+
+ 
